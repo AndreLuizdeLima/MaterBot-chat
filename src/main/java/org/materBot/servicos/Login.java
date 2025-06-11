@@ -2,6 +2,9 @@ package org.materBot.servicos;
 
 import java.util.Scanner;
 
+import static org.materBot.servicos.Relatorios.relatorio;
+import static org.materBot.servicos.Relatorios.relatorioPorProduto;
+
 public class Login {
     public static void login(){
         Scanner scan = new Scanner(System.in);
@@ -24,5 +27,7 @@ public class Login {
         }
 
         System.out.println("Acesso autorizado. Bem-vindo(a)!");
+        relatorio();
+        relatorioPorProduto();
     }
 }
