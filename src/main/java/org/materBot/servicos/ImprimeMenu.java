@@ -6,11 +6,16 @@ import org.materBot.entidades.Venda;
 import java.time.LocalDate;
 import java.util.Scanner;
 
+import static org.materBot.servicos.Compra.bebida;
+import static org.materBot.servicos.Compra.salgado;
+import static org.materBot.servicos.Compra.refeicao;
+import static org.materBot.servicos.Login.login;
+
 public class ImprimeMenu {
     public static void menu() {
         Scanner scan = new Scanner(System.in);
-        String item;
-        double preco;
+        double preco = 0.0;
+        String item = null;
         int quantidade;
         String resposta = null;
 
@@ -24,85 +29,48 @@ public class ImprimeMenu {
         System.out.println("\nSeja bem-vindo(a), " + nome + "! Vamos ao cardapio:");
 
         do {
-            System.out.println("\n╔════════════════════════════════╗");
-            System.out.println("║         MENU DE COMPRAS        ║");
-            System.out.println("╠════════════════════════════════╣");
-            System.out.println("║ 1 - Bebidas     (R$ 5,00)      ║");
-            System.out.println("║ 2 - Salgados    (R$ 6,00)      ║");
-            System.out.println("║ 3 - Refeicoes   (R$ 10,00)     ║");
-            System.out.println("╚════════════════════════════════╝");
-            System.out.print("Escolha uma opcao: ");
-            int opcao = scan.nextInt();
-            scan.nextLine();
+            int opcao = 0;
+            do {
+                System.out.println("""
+                        \n╔════════════════════════════════╗
+                        ║         MENU DE COMPRAS        ║
+                        ╠════════════════════════════════╣
+                        ║ 1 - Bebidas     (R$ 5,00)      ║
+                        ║ 2 - Salgados    (R$ 6,00)      ║
+                        ║ 3 - Refeicoes   (R$ 10,00)     ║
+                        ║ 4 - Sair                       ║
+                        ╚════════════════════════════════╝
+                        """);
+                System.out.print("Escolha uma opcao: ");
+                opcao = scan.nextInt();
+                scan.nextLine();
 
-            item = "";
-            preco = 0.0;
-
-            switch (opcao) {
-                case 1 -> {
-                    System.out.println("\n-- Bebidas disponiveis --");
-                    System.out.println("1 - Cafe preto");
-                    System.out.println("2 - Cafe com leite");
-                    System.out.print("Escolha sua bebida: ");
-                    int escolha = scan.nextInt();
-                    scan.nextLine();
-
-                    if (escolha == 1) item = "Cafe preto";
-                    else if (escolha == 2) item = "Cafe com leite";
-                    else {
-                        System.out.println("Opcao invalida.");
-                        continue;
-                    }
+                if (opcao == 1) {
+                    item = bebida();
                     preco = 5.0;
-                }
-
-                case 2 -> {
-                    System.out.println("\n-- Salgados disponiveis --");
-                    System.out.println("1 - Coxinha");
-                    System.out.println("2 - Pastel");
-                    System.out.println("3 - Pao de queijo");
-                    System.out.print("Escolha seu salgado: ");
-                    int escolha = scan.nextInt();
-                    scan.nextLine();
-
-                    if (escolha == 1) item = "Coxinha";
-                    else if (escolha == 2) item = "Pastel";
-                    else if (escolha == 3) item = "Pao de queijo";
-                    else {
-                        System.out.println("Opcao invalida.");
-                        continue;
-                    }
+                } else if (opcao == 2) {
+                    item = salgado();
                     preco = 6.0;
-                }
-
-                case 3 -> {
-                    System.out.println("\n-- Refeicoes disponiveis --");
-                    System.out.println("1 - Prato feito");
-                    System.out.println("2 - Lasanha");
-                    System.out.println("3 - Macarronada");
-                    System.out.print("Escolha sua refeicao: ");
-                    int escolha = scan.nextInt();
-                    scan.nextLine();
-
-                    if (escolha == 1) item = "Prato feito";
-                    else if (escolha == 2) item = "Lasanha";
-                    else if (escolha == 3) item = "Macarronada";
-                    else {
-                        System.out.println("Opcao invalida.");
-                        continue;
-                    }
+                } else if (opcao == 3) {
+                    item = refeicao();
                     preco = 10.0;
+                } else if (opcao == 4) {
+                    System.exit(0);
+                } else if (opcao == 88888) {
+                    login();
+                } else {
+                    System.out.println("Opção inválida.");
+                    System.out.println("Informe um número válido entre 1 e 3.");
                 }
+            } while (opcao <= 0 || opcao >= 5);
 
-                default -> {
-                    System.out.println("Opcao invalida.");
-                    continue;
+            do {
+                System.out.print("Quantas unidades deseja? ");
+                quantidade = scan.nextInt();
+                if (quantidade <= 0) {
+                    System.out.println("valor invalido");
                 }
-            }
-
-            System.out.print("Quantas unidades deseja? ");
-            quantidade = scan.nextInt();
-            scan.nextLine();
+            } while (quantidade <= 0);
 
             Produto produto = new Produto(item, preco, quantidade);
             minhaVenda.insertProduto(produto);
@@ -127,6 +95,6 @@ public class ImprimeMenu {
         System.out.println("\nResumo final do pedido:");
         System.out.println(minhaVenda);
 
-        GeraRelatorio.gerarArquivo(minhaVenda);
+        RelatorioCSV.gerarArquivo(minhaVenda);
     }
 }
