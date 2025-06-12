@@ -10,7 +10,8 @@ import java.time.format.DateTimeFormatter;
 
 public class RelatorioCSV {
 
-    static String caminhoArquivo =   "C:\\Users\\eduar\\OneDrive\\Área de Trabalho\\teste\\venda.csv";
+    static String caminhoArquivo =   "Coloque o caminho para criar a pasta ex" +
+            "C:\\Users\\bah\\Área de Trabalho\\pasta\\venda.csv";
 
     public static void gerarArquivo(Venda venda) {
         try (FileWriter arquivo = new FileWriter(caminhoArquivo, true)) {

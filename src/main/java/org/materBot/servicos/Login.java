@@ -13,7 +13,7 @@ public class Login {
         System.out.print("Por favor, informe seu e-mail: ");
         String email = scan.nextLine();
 
-        if (!email.equalsIgnoreCase("tia")) {
+        if (!email.equals("tiacantina@unimater")) {
             System.out.println("E-mail incorreto. Acesso negado.");
             System.exit(0);
         }
@@ -21,7 +21,7 @@ public class Login {
         System.out.print("Agora, informe sua senha: ");
         String senha = scan.nextLine();
 
-        if (!senha.equalsIgnoreCase("senha")) {
+        if (!senha.equals("senhaCantina")) {
             System.out.println("Senha incorreta. Acesso negado.");
             System.exit(0);
         }
