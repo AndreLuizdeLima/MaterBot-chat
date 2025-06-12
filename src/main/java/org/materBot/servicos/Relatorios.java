@@ -21,7 +21,7 @@ public class Relatorios {
             while ((linha = leitor.readLine()) != null) {
                 if (linha.trim().endsWith(";")) {
                     String[] partes = linha.split(";");
-                    if (partes.length >= 3) {
+                    if (partes.length == 3) {
                         try {
                             String valorFormatado = partes[2].replace(",", ".");
                             double valor = Double.parseDouble(valorFormatado);
@@ -66,11 +66,9 @@ public class Relatorios {
                     int quantidade = Integer.parseInt(partes[1]);
                     double custo = Double.parseDouble(partes[2].replace(",", "."));
 
-                    valorTotalPorItem.put(nomeProduto,
-                            valorTotalPorItem.getOrDefault(nomeProduto, 0.0) + (quantidade * custo));
+                    valorTotalPorItem.put(nomeProduto, valorTotalPorItem.getOrDefault(nomeProduto, 0.0) + (quantidade * custo));
 
-                    quantidadePorItem.put(nomeProduto,
-                            quantidadePorItem.getOrDefault(nomeProduto, 0) + quantidade);
+                    quantidadePorItem.put(nomeProduto, quantidadePorItem.getOrDefault(nomeProduto, 0) + quantidade);
                 }
             }
 
